@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Custom Image Hangman</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">🎯 Custom Image Hangman</h1>
+                <p class="app-subtitle">Upload your image and play with a twist!</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-card">
+                    <div class="welcome-icon">🎮</div>
+                    <h2>Welcome to Custom Image Hangman!</h2>
+                    <p>Upload your image and watch as a noose is drawn around it with each wrong guess.</p>
+                    
+                    <!-- Difficulty Selection -->
+                    <div class="difficulty-section">
+                        <h3>Choose Difficulty:</h3>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn easy" data-difficulty="easy">
+                                <span class="difficulty-icon">😊</span>
+                                <span class="difficulty-text">Easy</span>
+                                <span class="difficulty-desc">4-6 letters</span>
+                            </button>
+                            <button class="difficulty-btn medium" data-difficulty="medium">
+                                <span class="difficulty-icon">😐</span>
+                                <span class="difficulty-text">Medium</span>
+                                <span class="difficulty-desc">7-9 letters</span>
+                            </button>
+                            <button class="difficulty-btn hard" data-difficulty="hard">
+                                <span class="difficulty-icon">😰</span>
+                                <span class="difficulty-text">Hard</span>
+                                <span class="difficulty-desc">10+ letters</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="upload-section">
+                        <h3>Upload Your Image</h3>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <div class="upload-icon">📷</div>
+                                <p>Click to upload or drag & drop</p>
+                                <p class="upload-hint">Supports JPG, PNG, GIF</p>
+                            </div>
+                            <input type="file" id="imageInput" accept="image/*" hidden>
+                        </div>
+                        <button class="primary-btn" id="startGameBtn" disabled>
+                            <span class="btn-icon">🚀</span>
+                            Start Game
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character Editor Screen -->
+            <div class="character-editor" id="characterEditor" style="display: none;">
+                <div class="editor-header">
+                    <h2>🎨 Character Editor</h2>
+                    <p>First crop your face, then draw the body underneath</p>
+                </div>
+
+                <div class="editor-container">
+                    <!-- Combined Character Editor -->
+                    <div class="character-editor-section">
+                        <div class="editor-steps">
+                            <div class="step-indicator active" id="step1Indicator">
+                                <span class="step-number">1</span>
+                                <span class="step-text">Crop Face</span>
+                            </div>
+                            <div class="step-indicator" id="step2Indicator">
+                                <span class="step-number">2</span>
+                                <span class="step-text">Draw Body</span>
+                            </div>
+                        </div>
+
+                        <div class="character-canvas-container">
+                            <canvas id="characterCanvas" width="400" height="500"></canvas>
+                            
+                            <!-- Face Crop Controls -->
+                            <div class="crop-controls" id="cropControls">
+                                <div class="control-group">
+                                    <label>Circle Size: <span id="circleSize">100</span>px</label>
+                                    <input type="range" id="circleSizeSlider" min="50" max="150" value="100" class="slider">
+                                </div>
+                                <div class="control-buttons">
+                                    <button class="secondary-btn" id="resetCropBtn">Reset</button>
+                                    <button class="primary-btn" id="applyCropBtn">Apply Crop</button>
+                                </div>
+                            </div>
+
+                            <!-- Drawing Controls -->
+                            <div class="drawing-controls" id="drawingControls" style="display: none;">
+                                <div class="tool-selection">
+                                    <button class="tool-btn active" data-tool="pen" id="penTool">
+                                        <span class="tool-icon">✏️</span>
+                                        Pen
+                                    </button>
+                                    <button class="tool-btn" data-tool="eraser" id="eraserTool">
+                                        <span class="tool-icon">🧽</span>
+                                        Eraser
+                                    </button>
+                                    <button class="tool-btn" data-tool="clear" id="clearTool">
+                                        <span class="tool-icon">🗑️</span>
+                                        Clear
+                                    </button>
+                                </div>
+                                <div class="brush-settings">
+                                    <label>Brush Size: <span id="brushSize">5</span>px</label>
+                                    <input type="range" id="brushSizeSlider" min="1" max="20" value="5" class="slider">
+                                </div>
+                                <div class="color-picker">
+                                    <label>Color:</label>
+                                    <input type="color" id="colorPicker" value="#000000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="editor-actions">
+                    <button class="secondary-btn" id="backToUploadBtn">
+                        <span class="btn-icon">⬅️</span>
+                        Back to Upload
+                    </button>
+                    <button class="primary-btn" id="finishCharacterBtn" disabled>
+                        <span class="btn-icon">✅</span>
+                        Finish & Start Game
+                    </button>
+                </div>
+            </div>
+                </div>
+            </div>
+
+            <!-- Game Screen -->
+            <div class="game-screen" id="gameScreen" style="display: none;">
+                <!-- Game Header -->
+                <div class="game-header">
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Lives</span>
+                            <span class="stat-value" id="lives">6</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Difficulty</span>
+                            <span class="stat-value" id="difficultyDisplay">Medium</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Progress</span>
+                            <span class="stat-value" id="progress">0/0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="word-display">
+                        <span id="wordDisplay"></span>
+                    </div>
+                </div>
+
+                <!-- Game Canvas -->
+                <div class="game-canvas-section">
+                    <canvas id="gameCanvas" width="400" height="500"></canvas>
+                    
+                    <!-- Image Controls Panel -->
+                    <div class="controls-panel" id="controlsPanel" style="display: none;">
+                        <div class="panel-header">
+                            <h3>🎨 Image Controls</h3>
+                            <button class="close-btn" id="closeControlsBtn">×</button>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h4>Position & Size</h4>
+                            <div class="control-group">
+                                <label>X Position: <span id="xPos">0</span></label>
+                                <input type="range" id="xSlider" min="-100" max="100" value="0" class="slider">
+                            </div>
+                            <div class="control-group">
+                                <label>Y Position: <span id="yPos">0</span></label>
+                                <input type="range" id="ySlider" min="-100" max="100" value="0" class="slider">
+                            </div>
+                            <div class="control-group">
+                                <label>Size: <span id="sizePos">100</span>%</label>
+                                <input type="range" id="sizeSlider" min="50" max="150" value="100" class="slider">
+                            </div>
+                        </div>
+                        
+                        <div class="control-section">
+                            <h4>Image Effects</h4>
+                            <div class="effect-buttons">
+                                <button class="effect-btn" id="removeBackgroundBtn">
+                                    <span class="effect-icon">🎭</span>
+                                    Remove Background
+                                </button>
+                                <button class="effect-btn" id="detectFaceBtn">
+                                    <span class="effect-icon">👤</span>
+                                    Auto Face Detection
+                                </button>
+                                <button class="effect-btn" id="manualFaceBtn">
+                                    <span class="effect-icon">✋</span>
+                                    Manual Face Selection
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button class="secondary-btn" id="resetPositionBtn">Reset Position</button>
+                    </div>
+                </div>
+
+                <!-- Game Controls -->
+                <div class="game-controls">
+                    <div class="letter-input-section">
+                        <div class="input-group">
+                            <input type="text" id="letterInput" maxlength="1" placeholder="Enter a letter" class="letter-input">
+                            <button id="guessBtn" class="guess-btn">
+                                <span class="btn-icon">🎯</span>
+                                Guess
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="used-letters-section">
+                        <h3>Used Letters</h3>
+                        <div id="usedLetters" class="used-letters-grid"></div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn" id="toggleControlsBtn">
+                            <span class="btn-icon">⚙️</span>
+                            Image Controls
+                        </button>
+                        <button class="action-btn" id="toggleStickFigureBtn" style="display: none;">
+                            <span class="btn-icon">👤</span>
+                            Toggle Stick Figure
+                        </button>
+                        <button class="action-btn" id="newGameBtn">
+                            <span class="btn-icon">🔄</span>
+                            New Game
+                        </button>
+                        <button class="action-btn secondary" id="resetImageBtn">
+                            <span class="btn-icon">📷</span>
+                            Change Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Game Over Modal -->
+        <div class="modal" id="gameOverModal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-icon" id="modalIcon">🎉</div>
+                <h2 id="gameResult">Congratulations!</h2>
+                <p id="gameMessage">You won the game!</p>
+                <div class="modal-actions">
+                    <button id="playAgainBtn" class="primary-btn">
+                        <span class="btn-icon">🎮</span>
+                        Play Again
+                    </button>
+                    <button id="changeImageBtn" class="secondary-btn">
+                        <span class="btn-icon">📷</span>
+                        New Image
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
