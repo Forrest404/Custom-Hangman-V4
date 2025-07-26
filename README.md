@@ -2,7 +2,7 @@
 
 A unique twist on the classic hangman game where you can upload your own image and watch as a noose is progressively drawn around it with each wrong guess!
 
-**Play Here:** customhangman.netlify.app
+**Play Here:** ```customhangman.netlify.app```
 
 ## Features
 
@@ -74,4 +74,4 @@ You can easily customize the game by:
 
 ## License
 
-This project is open source and available under the MIT License. 
+This project is open source.
