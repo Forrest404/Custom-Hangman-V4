@@ -188,38 +188,17 @@
                         <h3>Used Letters</h3>
                         <div id="usedLetters" class="used-letters-grid"></div>
                     </div>
-
-                    <div class="action-buttons">
-                        <button class="action-btn" id="toggleControlsBtn">
-                            <span class="btn-icon">⚙️</span>
-                            Image Controls
-                        </button>
-                        <button class="action-btn" id="toggleStickFigureBtn" style="display: none;">
-                            <span class="btn-icon">👤</span>
-                            Toggle Stick Figure
-                        </button>
-                        <button class="action-btn" id="newGameBtn">
-                            <span class="btn-icon">🔄</span>
-                            New Game
-                        </button>
-                        <button class="action-btn secondary" id="resetImageBtn">
-                            <span class="btn-icon">📷</span>
-                            Change Image
-                        </button>
-                    </div>
                 </div>
 
                 <!-- Game Canvas -->
                 <div class="game-canvas-section">
                     <canvas id="gameCanvas" width="400" height="500"></canvas>
-                    
                     <!-- Image Controls Panel -->
                     <div class="controls-panel" id="controlsPanel" style="display: none;">
                         <div class="panel-header">
                             <h3>🎨 Image Controls</h3>
                             <button class="close-btn" id="closeControlsBtn">×</button>
                         </div>
-                        
                         <div class="control-section">
                             <h4>Position & Size</h4>
                             <div class="control-group">
@@ -235,7 +214,6 @@
                                 <input type="range" id="sizeSlider" min="50" max="150" value="100" class="slider">
                             </div>
                         </div>
-                        
                         <div class="control-section">
                             <h4>Image Effects</h4>
                             <div class="effect-buttons">
@@ -253,9 +231,28 @@
                                 </button>
                             </div>
                         </div>
-                        
                         <button class="secondary-btn" id="resetPositionBtn">Reset Position</button>
                     </div>
+                </div>
+
+                <!-- Action Buttons BELOW the canvas -->
+                <div class="action-buttons">
+                    <button class="action-btn" id="toggleControlsBtn">
+                        <span class="btn-icon">⚙️</span>
+                        Image Controls
+                    </button>
+                    <button class="action-btn" id="toggleStickFigureBtn" style="display: none;">
+                        <span class="btn-icon">👤</span>
+                        Toggle Stick Figure
+                    </button>
+                    <button class="action-btn" id="newGameBtn">
+                        <span class="btn-icon">🔄</span>
+                        New Game
+                    </button>
+                    <button class="action-btn secondary" id="resetImageBtn">
+                        <span class="btn-icon">📷</span>
+                        Change Image
+                    </button>
                 </div>
             </div>
         </main>
