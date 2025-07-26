@@ -1,0 +1,25 @@
+{
+  "name": "custom-image-hangman",
+  "version": "1.0.0",
+  "description": "A unique hangman game where you upload your own image and watch as a noose is drawn around it",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "hangman",
+    "game",
+    "javascript",
+    "canvas",
+    "image-processing",
+    "face-detection"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/hangman-game.git"
+  },
+  "homepage": "https://yourusername.github.io/hangman-game"
+} 
